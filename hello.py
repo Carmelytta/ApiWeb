@@ -44,7 +44,7 @@ def temperatura():
 
 @app.route("/api/humedadS") #URL de humedad de suelo
 def humedadS():
-    samples = request.args.get('samples', 30000)
+    samples = request.args.get('samples', 288)
     data = []
     import sqlite3
     #Obtenemos datos de la bd
@@ -52,7 +52,7 @@ def humedadS():
     c = conn.cursor()
     #Recorremos la base de datos haciendo una consulta 
     #El numero de consultas seran las muestras que tome para la representacion
-    for row in c.execute('SELECT * FROM humedadS ORDER BY fecha,hora LIMIT {}'.format(samples)):
+    for row in c.execute('SELECT * FROM humedadS ORDER BY fecha,hora DESC LIMIT {}'.format(samples)):
         data.append({'humedadS': row[2], 'tiempo': '{} {}'.format(row[0], row[1])})
     #Adjuntamos los datos de la humedad y la fecha
     
